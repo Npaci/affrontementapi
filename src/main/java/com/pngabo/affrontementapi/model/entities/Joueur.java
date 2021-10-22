@@ -1,21 +1,20 @@
 package com.pngabo.affrontementapi.model.entities;
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @DiscriminatorValue("JOUEUR")
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@Builder
 public class Joueur extends Utilisateur {
-    @Column(nullable = false)
     private int age;
-    @Column(nullable = false)
 
     @ManyToMany
     private List<Ligue> ligues;
@@ -27,5 +26,6 @@ public class Joueur extends Utilisateur {
     private List<Affrontement> participations2;
 
     @OneToMany(mappedBy = "vainqueur")
+//    @LazyCollection(value = LazyCollectionOption.FALSE)
     private List<Affrontement> victoires;
 }

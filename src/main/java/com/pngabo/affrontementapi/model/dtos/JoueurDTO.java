@@ -1,12 +1,10 @@
 package com.pngabo.affrontementapi.model.dtos;
 
+import com.pngabo.affrontementapi.model.entities.Affrontement;
 import com.pngabo.affrontementapi.model.entities.Ligue;
-import com.pngabo.affrontementapi.model.entities.Utilisateur;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,5 +14,15 @@ public class JoueurDTO {
     private String nom;
     private String prenom;
     private int age;
-    private List<Ligue> ligues;
+    private String username;
+    private List<LigueIntern> ligues;
+    private List<AffrontementDTO> allParticipations;
+    private List<AffrontementDTO> victoires;
+
+    @Data
+    @Builder
+    public static class LigueIntern {
+        private long id;
+        private String nom;
+    }
 }

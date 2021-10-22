@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -16,10 +18,13 @@ public class Affrontement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private LocalDate dateDebut;
-    private LocalDate dateFin;
+    private LocalDateTime dateDebut;
+    private LocalDateTime dateFin;
     @Enumerated(EnumType.STRING)
     private EtatAffrontement etat;
+
+    @ManyToOne
+    private Ligue ligue;
 
     @ManyToOne
     private Joueur joueur1;

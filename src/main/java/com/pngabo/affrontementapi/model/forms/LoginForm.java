@@ -1,22 +1,13 @@
 package com.pngabo.affrontementapi.model.forms;
 
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Data
-@Builder
 @Validated
-public class AdminForm {
-    @NotNull
-    private long id;
-    @NotBlank
-    private String nom;
-    @NotBlank
-    private String prenom;
+public class LoginForm {
     @NotBlank
     private String username;
     @NotBlank

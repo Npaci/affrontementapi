@@ -1,22 +1,45 @@
 package com.pngabo.affrontementapi.model.dtos;
 
 import com.pngabo.affrontementapi.model.EtatAffrontement;
-import com.pngabo.affrontementapi.model.entities.Arbitre;
-import com.pngabo.affrontementapi.model.entities.Joueur;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 public class AffrontementDTO {
     private long id;
-    private LocalDate dateDebut;
-    private LocalDate dateFin;
+    private LocalDateTime dateDebut;
+    private LocalDateTime dateFin;
     private EtatAffrontement etat;
-    private Joueur interv1;
-    private Joueur interv2;
-    private Joueur vainqueur;
-    private Arbitre arbitre;
+    private LigueIntern ligue;
+    private JoueurIntern interv1;
+    private JoueurIntern interv2;
+    private JoueurIntern vainqueur;
+    private ArbitreIntern arbitre;
+
+    @Data
+    @Builder
+    public static class LigueIntern {
+        private long id;
+        private String nom;
+    }
+
+    @Data
+    @Builder
+    public static class JoueurIntern {
+        private long id;
+        private String nom;
+        private String prenom;
+        private int age;
+    }
+
+    @Data
+    @Builder
+    public static class ArbitreIntern {
+        private long id;
+        private String nom;
+        private String prenom;
+    }
 }

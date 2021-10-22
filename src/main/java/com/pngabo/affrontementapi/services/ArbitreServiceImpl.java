@@ -8,6 +8,7 @@ import com.pngabo.affrontementapi.model.forms.ArbitreForm;
 import com.pngabo.affrontementapi.model.mappers.UtilisateurMapper;
 import com.pngabo.affrontementapi.repositories.ArbitreRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,6 +51,7 @@ public class ArbitreServiceImpl implements ArbitreService {
         return mapper.arbitreDTO(repository.save(toInsert));
     }
 
+    @Transactional
     @Override
     public ArbitreDTO delete(Long aLong) {
         if (!repository.existsById(aLong))

@@ -9,4 +9,5 @@ public class AdminDTO {
     private long id;
     private String nom;
     private String prenom;
+    private String username;
 }
