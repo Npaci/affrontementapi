@@ -43,6 +43,7 @@ public class AdminController {
 
     @PatchMapping(path = {"", "/", "/update"})
     public AdminDTO update(@Valid @RequestBody AdminForm form) {
+        form.setPassword(encoder.encode(form.getPassword()));
         return service.update(form);
     }
 

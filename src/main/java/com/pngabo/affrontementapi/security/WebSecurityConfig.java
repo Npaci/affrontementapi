@@ -51,13 +51,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/affrontement/**").hasAuthority("USER")
                 //enregion
 
-                //region UTILISATEUR
-                .antMatchers(HttpMethod.POST, "/utilisateur/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.PATCH, "/utilisateur/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/utilisateur/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/utilisateur/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/utilisateur/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET, "/utilisateur/**").hasAuthority("USER")
+                //region JOUEUR
+                .antMatchers(HttpMethod.POST, "/joueur/**").hasAuthority("USER")
+                .antMatchers(HttpMethod.PATCH, "/joueur/**").hasAuthority("USER")
+                .antMatchers(HttpMethod.PUT, "/joueur/**").hasAuthority("USER")
+                .antMatchers(HttpMethod.DELETE, "/joueur/**").hasAuthority("USER")
+                .antMatchers(HttpMethod.GET, "/joueur/**").hasAuthority("USER")
+//                .antMatchers(HttpMethod.GET, "/joueur/**").hasAuthority("USER")
                 //endregion
 
                 //region LIGUE
@@ -66,9 +66,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/ligue/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/ligue/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/ligue/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET, "/ligue/**").hasAuthority("USER");
+                .antMatchers(HttpMethod.GET, "/ligue/**").hasAuthority("USER")
                 //endregion
-//                .anyRequest().permitAll();
+                .anyRequest().permitAll();
 
         http.addFilterBefore(new JwtAuthorizationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
 

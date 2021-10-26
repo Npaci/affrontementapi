@@ -71,10 +71,10 @@ public class DatabasePopulator implements InitializingBean {
         //region JOUEUR
         Joueur j1 = new Joueur();
         j1.setId(0L);
-        j1.setNom("Terrieur");
-        j1.setPrenom("Alex");
+        j1.setNom("Juste");
+        j1.setPrenom("Leblanc");
         j1.setAge(26);
-        j1.setUsername("Alx");
+        j1.setUsername("justB");
         j1.setPassword(encoder.encode("pass"));
         j1.setRoles(List.of("USER"));
         j1.setLigues(List.of(l1));
@@ -83,12 +83,22 @@ public class DatabasePopulator implements InitializingBean {
         j2.setNom("Terrieur");
         j2.setPrenom("Alain");
         j2.setAge(22);
-        j2.setUsername("Alx_2");
+        j2.setUsername("Aln");
         j2.setPassword(encoder.encode("pass"));
         j2.setRoles(List.of("USER"));
         j2.setLigues(List.of(l1));
+        Joueur j3 = new Joueur();
+        j3.setId(0L);
+        j3.setNom("Terrieur");
+        j3.setPrenom("Alex");
+        j3.setAge(22);
+        j3.setUsername("Alx");
+        j3.setPassword(encoder.encode("pass"));
+        j3.setRoles(List.of("USER"));
+        j3.setLigues(List.of(l1));
         j1 = jRepository.save(j1);
         j2 = jRepository.save(j2);
+        j3 = jRepository.save(j3);
         //endregion
 
         //region AFFRONTEMENT
@@ -99,9 +109,21 @@ public class DatabasePopulator implements InitializingBean {
                 .etat(EtatAffrontement.RECHERCHE)
                 .ligue(l1)
                 .joueur1(j1)
-//                .joueur2(j2)
-                .vainqueur(j1)
+                .joueur2(j2)
+                //.vainqueur(j1)
                 .arbitre(ar1)
+                .build();
+        affrontementRepository.save(aff);
+        aff = Affrontement.builder()
+                .id(0L)
+                .dateDebut(LocalDateTime.now())
+                .dateFin(LocalDateTime.now().plusMinutes(10L))
+                .etat(EtatAffrontement.RECHERCHE)
+                .ligue(l2)
+                .joueur1(j1)
+                .joueur2(j3)
+//                .vainqueur(j1)
+//                .arbitre(ar1)
                 .build();
         affrontementRepository.save(aff);
         //endregion

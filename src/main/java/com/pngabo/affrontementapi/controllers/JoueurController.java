@@ -1,10 +1,10 @@
 package com.pngabo.affrontementapi.controllers;
 
 import com.pngabo.affrontementapi.model.dtos.JoueurDTO;
+import com.pngabo.affrontementapi.model.entities.Joueur;
 import com.pngabo.affrontementapi.model.forms.JoueurForm;
-import com.pngabo.affrontementapi.services.JoueurService;
+import com.pngabo.affrontementapi.repositories.JoueurRepository;
 import com.pngabo.affrontementapi.services.JoueurServiceImpl;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +16,12 @@ import java.util.List;
 @RequestMapping("/joueur")
 public class JoueurController {
     private final JoueurServiceImpl service;
+    private final JoueurRepository repository;
     private final PasswordEncoder encoder;
 
-    public JoueurController(JoueurServiceImpl jService, PasswordEncoder encoder) {
+    public JoueurController(JoueurServiceImpl jService, JoueurRepository repository, PasswordEncoder encoder) {
         this.service = jService;
+        this.repository = repository;
         this.encoder = encoder;
     }
 
@@ -27,6 +29,16 @@ public class JoueurController {
     public List<JoueurDTO> getAll() {
         return service.getAll();
     }
+
+    //PAGINATION
+//    Page<Joueur> getall(@RequestParam Optional<Integer> page, @RequestParam Optional<String> sortBy) {
+//        return repository.findAll(PageRequest.of(
+//                page.orElse(0),
+//                2,
+//                Sort.Direction.ASC,
+//                sortBy.orElse("id")
+//        ));
+//    }
 
     @GetMapping("/{id}")
     public JoueurDTO getOneParam(@PathVariable Long id) {
@@ -40,6 +52,7 @@ public class JoueurController {
 
     @PostMapping(path = {"", "/", "/add"})
     public JoueurDTO insert(@Valid @RequestBody JoueurForm form) {
+        form.setPassword(encoder.encode(form.getPassword()));
         return service.insert(form);
     }
 
@@ -56,8 +69,7 @@ public class JoueurController {
     }
 
     @GetMapping(path = "/inscription", params = {"idjoueur","idligue"})
-    public JoueurDTO inscription(@RequestParam Long idjoueur, @RequestParam Long idligue, HttpRequest req) {
-//        req.getHeaders().geta
+    public JoueurDTO inscription(@RequestParam Long idjoueur, @RequestParam Long idligue) {
         return service.inscriptionAffrontement(idjoueur, idligue);
     }
 }

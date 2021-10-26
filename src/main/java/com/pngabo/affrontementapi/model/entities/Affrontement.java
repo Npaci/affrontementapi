@@ -4,9 +4,7 @@ import com.pngabo.affrontementapi.model.EtatAffrontement;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -21,6 +19,7 @@ public class Affrontement {
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
     @Enumerated(EnumType.STRING)
+//    @Column(columnDefinition = "String default EtatAffrontement.RECHERCHE")
     private EtatAffrontement etat;
 
     @ManyToOne

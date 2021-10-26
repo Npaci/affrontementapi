@@ -6,10 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.Instant;
 
 @ControllerAdvice
@@ -61,6 +64,37 @@ public class ControllerAdviser {
     public ResponseEntity<ErrorDTO> handle(BadCredentialsException ex) {
         return  ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
+                .body(new ErrorDTO(ex.getMessage()));
+        // ou return new ResponseEntity<>(new ErrorDTO(ex.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<ErrorDTO> handle(SQLIntegrityConstraintViolationException ex) {
+        String msg = ex.getMessage();
+
+        if (msg.contains("ON PUBLIC.UTILISATEUR(USERNAME)"))
+            msg = "Ce nom d'utilisateur existe déjà!";
+        else
+            System.out.println("L'ERREUR NE CONTIENT PAS CE QUE L'ON CHERCHE!");
+
+        return  ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorDTO(msg));
+        // ou return new ResponseEntity<>(new ErrorDTO(ex.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ErrorDTO> handle(UsernameNotFoundException ex) {
+        return  ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorDTO(ex.getMessage()));
+        // ou return new ResponseEntity<>(new ErrorDTO(ex.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorDTO> handle(AuthenticationException ex) {
+        return  ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorDTO(ex.getMessage()));
         // ou return new ResponseEntity<>(new ErrorDTO(ex.getMessage()), HttpStatus.NOT_FOUND);
     }
